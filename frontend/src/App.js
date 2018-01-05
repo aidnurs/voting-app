@@ -1,9 +1,45 @@
 import React from 'react';
 
-const 
+function Option(props) {
+  return <div>opt</div>;
+}
 
-const element = <h1>Hello, world!</h1>;
+function Vote(props) {
+  return <li>{props.value}</li>;
+}
 
-var App=()=>element;
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 0,
+      data: [
+        {
+          text: 'learn react',
+          options: ['yes', 'no']
+        },
+        {
+          text: 'learn vuejs',
+          options: ['yes', 'no']
+        }
+      ]
+    };
+  }
+  renderVote() {
+    return (
+      <div>
+        <Vote value={this.state.data[0].text} />
+        <Option value={this.state.data[0].options} />
+      </div>
+    );
+  }
+  render() {
+    return (
+      <div>
+        <ul>{this.renderVote()}</ul>
+      </div>
+    );
+  }
+}
 
-export default App
+export default App;
