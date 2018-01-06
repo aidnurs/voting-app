@@ -1,22 +1,31 @@
 import React from 'react';
 
-function Option(props) {
+/*function Option(props) {
   return <div>opt</div>;
-}
+}*/
 
 function Vote(props) {
-  return <li>{props.value}</li>;
+  var arr = [];
+  for (var i = 0; i < props.value.options.length; i++) {
+    arr.push(<button>{props.value.options[i]}</button>);
+  }
+  return (
+    <div>
+      <li>{props.value.text}</li>
+      {arr}
+    </div>
+  );
 }
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0,
+      counter: [],
       data: [
         {
           text: 'learn react',
-          options: ['yes', 'no']
+          options: ['yes', 'no', 'maybe']
         },
         {
           text: 'learn vuejs',
@@ -25,20 +34,15 @@ class App extends React.Component {
       ]
     };
   }
-  renderVote() {
-    return (
-      <div>
-        <Vote value={this.state.data[0].text} />
-        <Option value={this.state.data[0].options} />
-      </div>
-    );
+  renderVotes(i) {
+    var votes = [];
+    for (var j = 0; j < i; j++) {
+      votes.push(<Vote key={j} value={this.state.data[j]} />);
+    }
+    return <div>{votes}</div>;
   }
   render() {
-    return (
-      <div>
-        <ul>{this.renderVote()}</ul>
-      </div>
-    );
+    return <ul>{this.renderVotes(this.state.data.length)}</ul>;
   }
 }
 
