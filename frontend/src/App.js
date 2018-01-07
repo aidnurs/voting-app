@@ -1,18 +1,19 @@
 import React from 'react';
 
-/*function Option(props) {
-  return <div>opt</div>;
-}*/
-
 function Vote(props) {
-  var arr = [];
-  for (var i = 0; i < props.value.options.length; i++) {
-    arr.push(<button>{props.value.options[i]}</button>);
+  var optArr = [];
+  var countArr = [];
+  for (var i = 0; i < props.data.options.length; i++) {
+    optArr.push(
+      <button onClick={props.onClick}>{props.data.options[i]}</button>
+    );
+    countArr.push(<div>{props.data.counter[i]}</div>);
   }
   return (
     <div>
-      <li>{props.value.text}</li>
-      {arr}
+      <div> {props.data.text}</div>
+      <div> {optArr}</div>
+      <div> {countArr}</div>
     </div>
   );
 }
@@ -20,29 +21,39 @@ function Vote(props) {
 class App extends React.Component {
   constructor(props) {
     super(props);
+    //this.renderVotes = this.renderVotes.bind(this);
+    this.handler = this.handler.bind(this);
     this.state = {
-      counter: [],
-      data: [
+      votes: [
         {
           text: 'learn react',
-          options: ['yes', 'no', 'maybe']
+          options: ['yes', 'no', 'maybe'],
+          counter: [5, 0, 3]
         },
         {
-          text: 'learn vuejs',
-          options: ['yes', 'no']
+          text: 'learn js',
+          options: ['yes', 'no', 'maybe'],
+          counter: [52, 0, 33]
         }
       ]
     };
   }
-  renderVotes(i) {
+  handler() {
+    this.setState({
+      votes: {}
+    });
+  }
+  renderVotes() {
     var votes = [];
-    for (var j = 0; j < i; j++) {
-      votes.push(<Vote key={j} value={this.state.data[j]} />);
+    for (var i = 0; i < this.state.votes.length; i++) {
+      votes.push(
+        <Vote onClick={this.handler} key={i} data={this.state.votes[i]} />
+      );
     }
-    return <div>{votes}</div>;
+    return votes;
   }
   render() {
-    return <ul>{this.renderVotes(this.state.data.length)}</ul>;
+    return <div>{this.renderVotes()}</div>;
   }
 }
 
