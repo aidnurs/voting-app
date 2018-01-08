@@ -38,16 +38,23 @@ class App extends React.Component {
       ]
     };
   }
-  handler() {
+  handler(i) {
+    console.log(i);
+    var votes = this.state.votes;
+    votes[i].counter[0]++;
     this.setState({
-      votes: {}
+      votes: votes
     });
   }
   renderVotes() {
     var votes = [];
     for (var i = 0; i < this.state.votes.length; i++) {
       votes.push(
-        <Vote onClick={this.handler} key={i} data={this.state.votes[i]} />
+        <Vote
+          onClick={() => this.handler(1)}
+          key={i}
+          data={this.state.votes[i]}
+        />
       );
     }
     return votes;

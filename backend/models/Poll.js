@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var pollSchema = mongoose.Schema({
   title: String,
   optionsNumber: Number,
-  options:[]
+  options:[String]
 });
 
 var Poll = mongoose.model('Poll', pollSchema);

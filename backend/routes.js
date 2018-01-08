@@ -10,11 +10,10 @@ module.exports = function(app) {
 
   app.route('/post').post(function(req, res) {
     var input = req.body.title;
-
     var newPoll = new Poll({
       title: input,
       optionsNumber: req.body.num,
-      options:req.body.array
+      options: req.body.arr
     });
     newPoll.save(function(err) {});
     res.send(newPoll);
@@ -25,6 +24,13 @@ module.exports = function(app) {
   });
 
   app.route('/delete').delete(function(req, res) {
+    var input = req.body.input;
+    Poll.findOneAndRemove({ title: input }, function(err) {});
+    res.sendStatus('delete');
+  });
+
+  app.route('/deleteAll').delete(function(req, res) {
+    Poll.remove({}, function(err) {});
     res.sendStatus('delete');
   });
 };
