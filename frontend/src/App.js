@@ -1,66 +1,51 @@
-import React from 'react';
+import React from "react";
+//import axios from "axios";
 
-function Vote(props) {
-  var optArr = [];
-  var countArr = [];
-  for (var i = 0; i < props.data.options.length; i++) {
-    optArr.push(
-      <button onClick={props.onClick}>{props.data.options[i]}</button>
-    );
-    countArr.push(<div>{props.data.counter[i]}</div>);
-  }
-  return (
-    <div>
-      <div> {props.data.text}</div>
-      <div> {optArr}</div>
-      <div> {countArr}</div>
-    </div>
-  );
-}
+import Poll from "../src/components/Poll.js";
+import Navbar from "../src/components/Navbar.js";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    //this.renderVotes = this.renderVotes.bind(this);
-    this.handler = this.handler.bind(this);
+    this.renderPolls = this.renderPolls.bind(this);
     this.state = {
-      votes: [
+      polls: [
         {
-          text: 'learn react',
-          options: ['yes', 'no', 'maybe'],
-          counter: [5, 0, 3]
+          title: "learn JS",
+          options: ["yes", "maybe", "no"],
+          votes: [0, 0, 0]
         },
         {
-          text: 'learn js',
-          options: ['yes', 'no', 'maybe'],
-          counter: [52, 0, 33]
+          title: "JS",
+          options: ["yes"],
+          votes: [0]
+        },
+        {
+          title: "how many",
+          options: ["1", "2"],
+          votes: [0, 0]
         }
       ]
     };
   }
-  handler(i) {
-    console.log(i);
-    var votes = this.state.votes;
-    votes[i].counter[0]++;
-    this.setState({
-      votes: votes
-    });
-  }
-  renderVotes() {
-    var votes = [];
-    for (var i = 0; i < this.state.votes.length; i++) {
-      votes.push(
-        <Vote
-          onClick={() => this.handler(1)}
-          key={i}
-          data={this.state.votes[i]}
-        />
-      );
+  renderPolls() {
+    var polls = [];
+    for (var i = 0; i < this.state.polls.length; i++) {
+      polls.push(<Poll key={i} data={this.state.polls[i]} />);
     }
-    return votes;
+    return polls;
+  }
+  voteClick(i, j) {
+    this.state.polls[i].votes[j]++;
   }
   render() {
-    return <div>{this.renderVotes()}</div>;
+    return (
+      <div>
+        <Navbar />
+        <Poll data={this.state.polls[0]} />
+        {/*{this.renderPolls()}*/}
+      </div>
+    );
   }
 }
 
